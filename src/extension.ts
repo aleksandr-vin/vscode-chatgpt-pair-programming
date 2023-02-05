@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import { ChatGPTAPI } from "chatgpt";
 import { window, commands, ExtensionContext } from "vscode";
+import { splitByCodeBlocks } from "./splitByCodeBlocks";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -27,28 +28,34 @@ export async function activate(context: ExtensionContext) {
     // });
 
     const result = await window.showInputBox({
-      value: "python",
-      valueSelection: [0, -1],
-      placeHolder: "For example: Python, Scala, Node.",
+      value: "Write a Hello World! app in Python and explain it",
+      valueSelection: [28, 34],
+      placeHolder: "Write a shell command to create a skeleton nodejs web app",
       validateInput: (text) => {
-        window.showInformationMessage(`Validating: ${text}`);
+        //window.showInformationMessage(`Validating: ${text}`);
         return text === "123" ? "Not 123!" : null;
       },
     });
 
     if (result) {
       console.log(`Selected ${result}, asking ChatGPT...`);
-      const ask = api.sendMessage(
-        `Write a Hello World! app in ${result}. And explain it.`
-      );
+      const ask = api.sendMessage(result);
       window.setStatusBarMessage("ChatGPT...", ask);
       const res = await ask;
-      console.log(res);
       window.showInformationMessage("ChatGPT replied");
+      console.log("; ChatGPT reply:", res);
       const l = window.createOutputChannel("ChatGPT Pair Programming", {
         log: true,
       });
-      l.append(res.text);
+      const blocks = splitByCodeBlocks(res.text);
+      console.log("; Blocks:", blocks);
+      blocks.forEach((block) => {
+        if (block.isCode) {
+          l.warn(`${block.meta ? block.meta : "code"}:\n${block.text}`);
+        } else {
+          l.info(block.text);
+        }
+      });
       l.show();
     }
   }
