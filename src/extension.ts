@@ -106,7 +106,7 @@ export async function activate(context: ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   let disposable = commands.registerCommand(
-    "chatgpt-pair-programming.helloWorld",
+    "chatgpt-pair-programming.ask",
     async () => {
       showQuickPick();
     }

@@ -16,8 +16,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "chatgpt-pair-programming.helloWorld",
-        "title": "Hello World"
+        "command": "chatgpt-pair-programming.ask",
+        "title": "Ask ChatGPT to Pair Programm"
       }
     ],
     "configuration": {
