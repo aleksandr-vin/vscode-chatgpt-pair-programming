@@ -19,7 +19,31 @@
         "command": "chatgpt-pair-programming.helloWorld",
         "title": "Hello World"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "ChatGPT Pair Programming",
+      "type": "object",
+      "properties": {
+        "chatgpt-pair-programming.apiKey": {
+          "markdownDescription": "OpenAI API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys).\n\nCan be overridden by `OPENAI_API_KEY` environment variable.",
+          "type": "string",
+          "order": 0
+        },
+        "chatgpt-pair-programming.wrappingTemplate": {
+          "type": "string",
+          "default": "docker run --rm -i -v $(pwd):/code -w /code --entrypoint bash node:19 -s <<EOF\n[SNIPPET]\nEOF",
+          "markdownDescription": "Code to wrap snippets from ChatGPT, which will substitute the `[SNIPPET]` placeholder.",
+          "editPresentation": "multilineText",
+          "order": 1
+        },
+        "chatgpt-pair-programming.askBeforeEachRun": {
+          "description": "Ask before running ChatGPT snippets",
+          "type": "boolean",
+          "default": true,
+          "order": 2
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
