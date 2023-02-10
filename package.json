@@ -2,7 +2,7 @@
   "name": "chatgpt-pair-programming",
   "displayName": "ChatGPT Pair Programming",
   "description": "Pair Programming with ChatGPT",
-  "publisher": "aleksandr-vin",
+  "publisher": "aleksandrvin",
   "icon": "images/extensionIcon.png",
   "license": "MIT",
   "repository": {
