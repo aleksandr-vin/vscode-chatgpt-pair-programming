@@ -1,6 +1,6 @@
 # ChatGPT Pair Programming
 
-VS Code extension for Pair Programming with ChatGPT.
+VS Code extension for Pair Programming with ChatGPT
 
 ## Features
 
