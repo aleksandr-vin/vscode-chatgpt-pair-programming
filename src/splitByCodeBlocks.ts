@@ -8,7 +8,13 @@ type Block = {
 export function splitByCodeBlocks(text: string): Block[] {
   const items = (text.startsWith("```") ? `\n${text}` : text).split("\n```");
   const [firstPara, ...rest] = items;
-  return textBlock(firstPara).concat(parseBlocks(rest));
+  const result = textBlock(firstPara).concat(parseBlocks(rest));
+  if (result.length === 1 && !result[0].isCode && text.indexOf("\n") === -1) {
+    console.log("Text contained only one line, considering it a code block");
+    return codeBlock(text);
+  } else {
+    return result;
+  }
 }
 
 // Parse array of text chunks into array of Blocks.
@@ -29,7 +35,7 @@ function parseBlocks(chunks: string[]): Block[] {
 // Return code Block.
 // Detect optional language name at start of the block
 // and add new line at the end.
-function codeBlock(text: string): Block[] {
+export function codeBlock(text: string): Block[] {
   const pos = text.indexOf("\n");
   const meta = text.substring(0, pos);
   return [
@@ -42,7 +48,7 @@ function codeBlock(text: string): Block[] {
 }
 
 // Return text Block if text is not empty.
-function textBlock(text: string): Block[] {
+export function textBlock(text: string): Block[] {
   return text === ""
     ? []
     : [

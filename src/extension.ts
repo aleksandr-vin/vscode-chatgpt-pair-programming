@@ -58,7 +58,7 @@ export async function activate(context: ExtensionContext) {
       });
       l.info("User:", result);
       l.info("ChatGPT:");
-      const blocks = splitByCodeBlocks(res.text);
+      var blocks = splitByCodeBlocks(res.text);
       console.log("; Blocks:", blocks);
       const codeDir =
         context.extensionMode === ExtensionMode.Production
@@ -81,7 +81,7 @@ export async function activate(context: ExtensionContext) {
           const yesno = (config.get("askBeforeEachRun") as boolean)
             ? await window.showInformationMessage(
                 `Run snippet from ChatGPT?\nTerminal will be created${
-                  context.extensionMode !== ExtensionMode.Production
+                  context.extensionMode !== ExtensionMode.Production && false
                     ? " in sandbox " + codeDir
                     : ""
                 }.`,
